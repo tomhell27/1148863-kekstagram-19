@@ -7,7 +7,6 @@ var AVATAR_NUMBER = 6;
 var MESSAGE_NUMBER = 5;
 
 var similarListElement = document.querySelector('.pictures');
-document.querySelector('.pictures__title').classList.remove('visually-hidden');
 
 var similarPictureTemplate = document.querySelector('#picture')
   .content
@@ -31,11 +30,11 @@ var createComments = function (commentsNumber) {
   return arr;
 };
 
-var comment = createComments(randomNUMBER(1, AVATAR_NUMBER));
 
 var createObjects = function (objectsNumber) {
   var arr = [];
   for (var i = 0; i <= objectsNumber - 1; i++) {
+    var comment = createComments(randomNUMBER(1, MESSAGE_NUMBER));
     arr.push({
       url: 'photos/' + randomNUMBER(1, PICTURES_LENGTH) + '.jpg',
       description: '...',
@@ -54,7 +53,7 @@ var renderPicture = function (picture) {
   var pictureElement = similarPictureTemplate.cloneNode(true);
   pictureElement.querySelector('.picture__img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
-  pictureElement.querySelector('.picture__comments').textContent = picture.comments;
+  pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
   return pictureElement;
 };
 
