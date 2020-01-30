@@ -3,6 +3,8 @@ var MESSAGES = ['Всё отлично!', 'Когда вы делаете фот
 
 var NAMES = ['БёрдМэн', 'ПРаск0вья', 'Артём27', 'Крошка Енот', 'Joker', 'NoName', 'Darzzz', 'Freddie', 'Алина'];
 var PICTURES_LENGTH = 25;
+var AVATAR_NUMBER = 6;
+var MESSAGE_NUMBER = 5;
 
 var similarListElement = document.querySelector('.pictures');
 document.querySelector('.pictures__title').classList.remove('visually-hidden');
@@ -20,8 +22,8 @@ var createComments = function (commentsNumber) {
   var arr = [];
   for (var i = 0; i <= commentsNumber - 1; i++) {
     arr.push({
-      avatar: 'img/avatar-' + randomNUMBER(1, 6) + '.svg',
-      message: MESSAGES[randomNUMBER(1, 5)],
+      avatar: 'img/avatar-' + randomNUMBER(1, AVATAR_NUMBER) + '.svg',
+      message: MESSAGES[randomNUMBER(1, MESSAGE_NUMBER)],
       name: NAMES[randomNUMBER(1, (NAMES.length - 1))]
     }
     );
@@ -29,15 +31,15 @@ var createComments = function (commentsNumber) {
   return arr;
 };
 
-var comment = createComments(randomNUMBER(1, 6));
+var comment = createComments(randomNUMBER(1, AVATAR_NUMBER));
 
 var createObjects = function (objectsNumber) {
   var arr = [];
   for (var i = 0; i <= objectsNumber - 1; i++) {
     arr.push({
-      url: 'photos/' + randomNUMBER(1, 25) + '.jpg',
+      url: 'photos/' + randomNUMBER(1, PICTURES_LENGTH) + '.jpg',
       description: '...',
-      likes: randomNUMBER(1, 25),
+      likes: randomNUMBER(1, PICTURES_LENGTH),
       comments: comment
     }
 
@@ -56,9 +58,14 @@ var renderPicture = function (picture) {
   return pictureElement;
 };
 
-var fragment = document.createDocumentFragment();
+var createFragment = function (fragment) {
 
-for (var i = 0; i < pictures.length; i++) {
-  fragment.appendChild(renderPicture(pictures[i]));
-}
-similarListElement.appendChild(fragment);
+  for (var i = 0; i < pictures.length; i++) {
+    fragment.appendChild(renderPicture(pictures[i]));
+  }
+  return similarListElement.appendChild(fragment);
+};
+
+var fragmentDocument = document.createDocumentFragment();
+
+createFragment(fragmentDocument);
