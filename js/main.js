@@ -6,6 +6,9 @@ var PICTURES_LENGTH = 25;
 var AVATAR_NUMBER = 6;
 var MESSAGE_NUMBER = 5;
 
+var body = document.querySelector('body');
+body.classList.add('modal-open');
+
 var similarListElement = document.querySelector('.pictures');
 
 var similarPictureTemplate = document.querySelector('#picture')
@@ -37,7 +40,7 @@ var createObjects = function (objectsNumber) {
     var comment = createComments(randomNUMBER(1, MESSAGE_NUMBER));
     arr.push({
       url: 'photos/' + randomNUMBER(1, PICTURES_LENGTH) + '.jpg',
-      description: '...',
+      description: 'Ну, как вам? Оцените!',
       likes: randomNUMBER(1, PICTURES_LENGTH),
       comments: comment
     }
@@ -68,3 +71,54 @@ var createFragment = function (fragment) {
 var fragmentDocument = document.createDocumentFragment();
 
 createFragment(fragmentDocument);
+
+// находим секцию
+var bigPicture = document.querySelector('.big-picture');
+bigPicture.classList.remove('hidden');
+
+// удаляем "Загрузить еще"
+var commentsLoader = bigPicture.querySelector('.comments-loader');
+commentsLoader.classList.add('hidden');
+
+// находим картинку
+var bigPictureImage = document.querySelector('.big-picture__img');
+bigPictureImage.querySelector('img').src = pictures[0].url;
+
+// лайки, описание, аватарка автора фотографии
+var bigPictureSocial = bigPicture.querySelector('.big-picture__social');
+bigPictureSocial.querySelector('.social__caption').textContent = pictures[0].description;
+bigPictureSocial.querySelector('.likes-count').textContent = pictures[0].likes;
+
+// комментарии, количество, аватарки
+var socialCommentCount = document.querySelector('.social__comment-count');
+socialCommentCount.querySelector('.comments-count').textContent = pictures[0].comments.length;
+socialCommentCount.classList.add('hidden');
+
+// находим все комментарии ul
+var newComments = document.querySelector('.social__comments');
+
+// находим все li
+var newComment = document.querySelector('.social__comment');
+
+
+var renderComment = function (picture) {
+  var commentElement = newComment.cloneNode(true);
+
+  commentElement.querySelector('.social__picture').src = picture.avatar;
+  commentElement.querySelector('.social__picture').alt = picture.name;
+  commentElement.querySelector('.social__text').textContent = picture.message;
+  return commentElement;
+};
+
+var createComment = function (fragment) {
+
+  for (var i = 0; i < pictures[0].comments.length; i++) {
+    fragment.appendChild(renderComment(pictures[0].comments[i]));
+  }
+  return newComments.appendChild(fragment);
+};
+
+var fragmentComment = document.createDocumentFragment();
+
+createComment(fragmentComment);
+
