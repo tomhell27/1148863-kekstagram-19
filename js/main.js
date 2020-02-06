@@ -5,7 +5,8 @@ var NAMES = ['БёрдМэн', 'ПРаск0вья', 'Артём27', 'Крошк�
 var PICTURES_LENGTH = 25;
 var AVATAR_NUMBER = 6;
 var MESSAGE_NUMBER = 5;
-
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
 var body = document.querySelector('body');
 body.classList.add('modal-open');
 
@@ -72,6 +73,135 @@ var fragmentDocument = document.createDocumentFragment();
 
 createFragment(fragmentDocument);
 
+// открываем-закрываем форму
+
+var modalOpen = document.querySelector('#upload-file');
+var modalClose = document.querySelector('#upload-cancel');
+var modalPicture = document.querySelector('.img-upload__overlay');
+var modalHash = document.querySelector('.text__hashtags');
+var modalComments = document.querySelector('.text__description');
+
+var onModalEscPress = function (evt) {
+  if (modalHash === document.activeElement || modalComments === document.activeElement) {
+    return evt;
+  } else {
+    if (evt.key === ESC_KEY) {
+      closeModal();
+    }
+  }
+};
+
+var openModal = function () {
+  modalPicture.classList.remove('hidden');
+
+  document.addEventListener('keydown', onModalEscPress);
+};
+
+var closeModal = function () {
+  modalPicture.classList.add('hidden');
+  document.removeEventListener('keydown', onModalEscPress);
+};
+
+modalOpen.addEventListener('change', function () {
+  openModal();
+});
+
+modalOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    openModal();
+  }
+});
+
+modalClose.addEventListener('click', function () {
+  closeModal();
+
+});
+
+modalClose.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closeModal();
+  }
+});
+
+// валллидация хэш-тэгов
+
+// эффекты для изображений
+
+var controlSmaller = document.querySelector('.scale__control--smaller');
+var controlBigger = document.querySelector('.scale__control--bigger');
+var scaleControlValue = document.querySelector('.scale__control--value');
+var imgUpload = document.querySelector('.img-upload__preview');
+
+// масштаб
+scaleControlValue.value = '100%'
+imgUpload.style.transform = 'scale(1)';
+
+controlBigger.addEventListener('click', function () {
+  if ((parseInt(scaleControlValue.value) + 25) >= 100) {
+    imgUpload.style.transform = 'scale(' + 1 + ')';
+    scaleControlValue.value = '100%';
+  }
+  else {
+    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value) + 25) / 100) + ')';
+    scaleControlValue.value = (parseInt(scaleControlValue.value) + 25) + '%';
+  }
+});
+
+controlSmaller.addEventListener('click', function () {
+  if ((parseInt(scaleControlValue.value) - 25) <= 25) {
+    imgUpload.style.transform = 'scale(' + 0.25 + ')';
+    scaleControlValue.value = '25%';
+  }
+  else {
+    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value) - 25) / 100) + ')';
+    scaleControlValue.value = (parseInt(scaleControlValue.value) - 25) + '%';
+  }
+});
+
+// всякие там другие эффекты
+var pinForm = document.querySelector('.img-upload__effect-level'); // вообще весь fieldset с ползунком
+var effectPin = document.querySelector('.effect-level__pin'); // ползунок
+var imgEffect = imgUpload.querySelector('img'); //картинка, которую мы меняем
+
+pinForm.classList.add('hidden'); // прячем ползунок
+
+var effects = document.querySelectorAll('.effects__preview');
+
+for (var i = 0; i < effects.length; i++) {
+  effects[i].addEventListener('click', function () {
+    imgEffect.classList.add(effects[i].classList.item(1))
+  });
+};
+
+
+/*
+
+effects[0].addEventListener('click', function () {
+  imgEffect.classList.add(effects[0].classList.item(1))
+});
+
+
+effects[1].addEventListener('click', function () {
+  imgEffect.classList.add(effects[1].classList.item(1))
+});
+
+effects[2].addEventListener('click', function () {
+  imgEffect.classList.add(effects[2].classList.item(1))
+});
+
+
+effects[3].addEventListener('click', function () {
+  imgEffect.classList.add(effects[3].classList.item(1))
+});
+
+effects[4].addEventListener('click', function () {
+  imgEffect.classList.add(effects[4].classList.item(1))
+});
+
+effects[5].addEventListener('click', function () {
+  imgEffect.classList.add(effects[5].classList.item(1))
+});
+/*
 // находим секцию
 var bigPicture = document.querySelector('.big-picture');
 bigPicture.classList.remove('hidden');
@@ -121,4 +251,6 @@ var createComment = function (fragment) {
 var fragmentComment = document.createDocumentFragment();
 
 createComment(fragmentComment);
+
+*/
 
