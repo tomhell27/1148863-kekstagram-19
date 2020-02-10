@@ -163,13 +163,24 @@ controlSmaller.addEventListener('click', function () {
 
 var pinForm = document.querySelector('.img-upload__effect-level'); // вообще весь fieldset с ползунком
 var effectPin = pinForm.querySelector('.effect-level__pin'); // ползунок
-var levelValue = pinForm.querySelector('.effect-level__value'); // значение ползунка
+var levelValue = document.querySelector('.effect-level__value'); // значение ползунка
 var levelLine = pinForm.querySelector('.effect-level__line');// линия ползунка
 var imgEffect = imgUpload.querySelector('img'); // картинка, которую мы меняем
 
-pinForm.classList.add('hidden');// прячем ползунок
 
+pinForm.classList.add('hidden');// прячем ползунок
 var effects = document.querySelectorAll('.effects__label');
+
+// слайдер
+
+
+effectPin.addEventListener('mouseup', function () {
+
+  var firstPoint = effectPin.offsetLeft; // положение ползунка относительно начала линии
+  var computedStyle = getComputedStyle(levelLine); // Получаем стили шкалы
+  var scaleWidth = parseInt(computedStyle.width, 10);// Узнаем длину шкалы
+  levelValue.value = (Math.floor((firstPoint * 100) / scaleWidth)); // Меняем value
+});
 
 // добавляем эффекты и устанавливаем зависимость от положения ползунка
 
@@ -216,20 +227,6 @@ for (var i = 0; i < effects.length; i++) {
     }
   });
 }
-
-// слайдер
-
-effectPin.addEventListener('mouseup', function () {
-  var lineCoords = levelLine.getBoundingClientRect();
-  var pointCoords = effectPin.getBoundingClientRect();
-
-  var onePoint = lineCoords.clientX; // начало линии
-  var threePoint = pointCoords.clientX; // положение ползунка
-  var pointPosition = threePoint - onePoint; // положение ползунка относительно начала линии
-  var oneStep = lineCoords.clientWidth / 100; // 1 шаг
-
-  levelValue.value = Math.floor(pointPosition / oneStep); // значение ползунка = к-ло шагов
-});
 
 // валидация хэштэгов
 
