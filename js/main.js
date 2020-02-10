@@ -102,6 +102,10 @@ var openModal = function () {
   document.addEventListener('keydown', onModalEscPress);
   scaleControlValue.value = '100%';
   imgUpload.style.transform = 'scale(1)';
+  imgEffect.classList = 'none';
+  imgEffect.style.filter = 'none';
+  pinForm.classList.add('hidden');
+  modalHash.value = '';
 };
 
 var closeModal = function () {
@@ -170,7 +174,7 @@ var levelValue = document.querySelector('.effect-level__value'); // значен
 var levelLine = pinForm.querySelector('.effect-level__line');// линия ползунка
 
 
-pinForm.classList.add('hidden');// прячем ползунок
+// pinForm.classList.add('hidden');// прячем ползунок
 
 // слайдер меняем значение value
 
