@@ -87,13 +87,14 @@ var modalComments = document.querySelector('.text__description');
 
 var onModalEscPress = function (evt) {
   if (modalHash === document.activeElement || modalComments === document.activeElement) {
-    return evt;
+    return;
   } else {
     if (evt.key === ESC_KEY) {
       closeModal();
     }
   }
 };
+
 
 var openModal = function () {
   modalPicture.classList.remove('hidden');
@@ -134,28 +135,27 @@ var scaleControlValue = document.querySelector('.scale__control--value');
 var imgUpload = document.querySelector('.img-upload__preview');
 
 // масштаб
-scaleControlValue.value = '100%'
+scaleControlValue.value = '100%';
 imgUpload.style.transform = 'scale(1)';
 
+
 controlBigger.addEventListener('click', function () {
-  if ((parseInt(scaleControlValue.value) + ONE_STEP) >= 100) {
+  if ((parseInt(scaleControlValue.value, 10) + ONE_STEP) >= 100) {
     imgUpload.style.transform = 'scale(' + 1 + ')';
     scaleControlValue.value = '100%';
-  }
-  else {
-    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value) + ONE_STEP) / 100) + ')';
-    scaleControlValue.value = (parseInt(scaleControlValue.value) + ONE_STEP) + '%';
+  } else {
+    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, 10) + ONE_STEP) / 100) + ')';
+    scaleControlValue.value = (parseInt(scaleControlValue.value, 10) + ONE_STEP) + '%';
   }
 });
 
 controlSmaller.addEventListener('click', function () {
-  if ((parseInt(scaleControlValue.value) - ONE_STEP) <= ONE_STEP) {
+  if ((parseInt(scaleControlValue.value, 10) - ONE_STEP) <= ONE_STEP) {
     imgUpload.style.transform = 'scale(' + 0.25 + ')';
     scaleControlValue.value = '25%';
-  }
-  else {
-    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value) - ONE_STEP) / 100) + ')';
-    scaleControlValue.value = (parseInt(scaleControlValue.value) - ONE_STEP) + '%';
+  } else {
+    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, 10) - ONE_STEP) / 100) + ')';
+    scaleControlValue.value = (parseInt(scaleControlValue.value, 10) - ONE_STEP) + '%';
   }
 });
 
@@ -165,7 +165,7 @@ var pinForm = document.querySelector('.img-upload__effect-level'); // вообщ
 var effectPin = pinForm.querySelector('.effect-level__pin'); // ползунок
 var levelValue = pinForm.querySelector('.effect-level__value'); // значение ползунка
 var levelLine = pinForm.querySelector('.effect-level__line');// линия ползунка
-var imgEffect = imgUpload.querySelector('img'); //картинка, которую мы меняем
+var imgEffect = imgUpload.querySelector('img'); // картинка, которую мы меняем
 
 pinForm.classList.add('hidden');// прячем ползунок
 
@@ -174,6 +174,7 @@ var effects = document.querySelectorAll('.effects__label');
 // добавляем эффекты и устанавливаем зависимость от положения ползунка
 
 for (var i = 0; i < effects.length; i++) {
+
   effects[i].addEventListener('click', function (e) {
     var newEffect = e.target.classList.item(1);
 
@@ -181,7 +182,7 @@ for (var i = 0; i < effects.length; i++) {
     currentEffect = newEffect;
 
     imgEffect.classList.add(newEffect);
-    scaleControlValue.value = '100%'
+    scaleControlValue.value = '100%';
     imgUpload.style.transform = 'scale(1)';
 
     var formula = function (beggining, end) {
@@ -210,13 +211,11 @@ for (var i = 0; i < effects.length; i++) {
 
     if (newEffect === 'effects__preview--none') {
       pinForm.classList.add('hidden');
-    }
-    else {
+    } else {
       pinForm.classList.remove('hidden');
     }
   });
-};
-
+}
 
 // слайдер
 
@@ -233,8 +232,6 @@ effectPin.addEventListener('mouseup', function () {
 });
 
 // валидация хэштэгов
-
-var modalHash = document.querySelector('.text__hashtags');
 
 modalHash.addEventListener('input', function (evt) {
   var invalidMessage = [];
@@ -265,13 +262,6 @@ modalHash.addEventListener('input', function (evt) {
     return item.slice(1).match(/^\w+$/);
   });
 
-  var isRepeatHashing = inputArray.some(function (item, i, arr) {
-    return arr.indexOf(item, i + 1) >= i + 1;
-  });
-
-
-
-
   if (!inputText) {
     return;
   }
@@ -296,6 +286,9 @@ modalHash.addEventListener('input', function (evt) {
     invalidMessage.push('Хэштэги должны разделяться пробелами!');
   }
 
+  var isRepeatHashing = inputArray.some(function (item, j, arr) {
+    return arr.indexOf(item, j + 1) >= j + 1;
+  });
   if (isRepeatHashing) {
     invalidMessage.push('Один и тот же хэш-тег не может быть использован дважды!');
   }
