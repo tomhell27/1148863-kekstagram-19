@@ -74,7 +74,7 @@ var createFragment = function (fragment) {
 };
 
 var fragmentDocument = document.createDocumentFragment();
-
+var effects = document.querySelectorAll('.effects__label');
 createFragment(fragmentDocument);
 
 // открываем-закрываем форму
@@ -84,7 +84,8 @@ var modalClose = document.querySelector('#upload-cancel');
 var modalPicture = document.querySelector('.img-upload__overlay');
 var modalHash = document.querySelector('.text__hashtags');
 var modalComments = document.querySelector('.text__description');
-
+var imgUpload = document.querySelector('.img-upload__preview');
+var imgEffect = imgUpload.querySelector('img');
 var onModalEscPress = function (evt) {
   if (modalHash === document.activeElement || modalComments === document.activeElement) {
     return;
@@ -99,6 +100,8 @@ var onModalEscPress = function (evt) {
 var openModal = function () {
   modalPicture.classList.remove('hidden');
   document.addEventListener('keydown', onModalEscPress);
+  scaleControlValue.value = '100%';
+  imgUpload.style.transform = 'scale(1)';
 };
 
 var closeModal = function () {
@@ -132,7 +135,7 @@ modalClose.addEventListener('keydown', function (evt) {
 var controlSmaller = document.querySelector('.scale__control--smaller');
 var controlBigger = document.querySelector('.scale__control--bigger');
 var scaleControlValue = document.querySelector('.scale__control--value');
-var imgUpload = document.querySelector('.img-upload__preview');
+
 
 // масштаб
 scaleControlValue.value = '100%';
@@ -165,13 +168,11 @@ var pinForm = document.querySelector('.img-upload__effect-level'); // вообщ
 var effectPin = pinForm.querySelector('.effect-level__pin'); // ползунок
 var levelValue = document.querySelector('.effect-level__value'); // значение ползунка
 var levelLine = pinForm.querySelector('.effect-level__line');// линия ползунка
-var imgEffect = imgUpload.querySelector('img'); // картинка, которую мы меняем
 
 
 pinForm.classList.add('hidden');// прячем ползунок
-var effects = document.querySelectorAll('.effects__label');
 
-// слайдер
+// слайдер меняем значение value
 
 
 effectPin.addEventListener('mouseup', function () {
@@ -193,8 +194,6 @@ for (var i = 0; i < effects.length; i++) {
     currentEffect = newEffect;
 
     imgEffect.classList.add(newEffect);
-    scaleControlValue.value = '100%';
-    imgUpload.style.transform = 'scale(1)';
 
     var formula = function (beggining, end) {
       return beggining + (end / 100) * levelValue.value;
