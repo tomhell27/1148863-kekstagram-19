@@ -5,7 +5,12 @@ var NAMES = ['БёрдМэн', 'ПРаск0вья', 'Артём27', 'Крошк�
 var PICTURES_LENGTH = 25;
 var AVATAR_NUMBER = 6;
 var MESSAGE_NUMBER = 5;
-
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
+var ONE_STEP = 25;
+var MAX_HASHTAGS = 5;
+var MAX_SYMBOLS = 20;
+var currentEffect = 'none';
 var body = document.querySelector('body');
 body.classList.add('modal-open');
 
@@ -69,10 +74,237 @@ var createFragment = function (fragment) {
 };
 
 var fragmentDocument = document.createDocumentFragment();
-
+var effects = document.querySelectorAll('.effects__label');
 createFragment(fragmentDocument);
 
-// находим секцию
+// открываем-закрываем форму
+
+var modalOpen = document.querySelector('#upload-file');
+var modalClose = document.querySelector('#upload-cancel');
+var modalPicture = document.querySelector('.img-upload__overlay');
+var modalHash = document.querySelector('.text__hashtags');
+var modalComments = document.querySelector('.text__description');
+var imgUpload = document.querySelector('.img-upload__preview');
+var imgEffect = imgUpload.querySelector('img');
+var onModalEscPress = function (evt) {
+  if (modalHash === document.activeElement || modalComments === document.activeElement) {
+    return;
+  } else {
+    if (evt.key === ESC_KEY) {
+      closeModal();
+    }
+  }
+};
+
+
+var openModal = function () {
+  modalPicture.classList.remove('hidden');
+  document.addEventListener('keydown', onModalEscPress);
+  scaleControlValue.value = '100%';
+  imgUpload.style.transform = 'scale(1)';
+  imgEffect.classList = 'none';
+  imgEffect.style.filter = 'none';
+  pinForm.classList.add('hidden');
+  modalHash.value = '';
+};
+
+var closeModal = function () {
+  modalPicture.classList.add('hidden');
+  document.removeEventListener('keydown', onModalEscPress);
+};
+
+modalOpen.addEventListener('change', function () {
+  openModal();
+});
+
+modalOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    openModal();
+  }
+});
+
+modalClose.addEventListener('click', function () {
+  closeModal();
+
+});
+
+modalClose.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closeModal();
+  }
+});
+
+// эффекты для изображений
+
+var controlSmaller = document.querySelector('.scale__control--smaller');
+var controlBigger = document.querySelector('.scale__control--bigger');
+var scaleControlValue = document.querySelector('.scale__control--value');
+
+
+// масштаб
+scaleControlValue.value = '100%';
+imgUpload.style.transform = 'scale(1)';
+
+
+controlBigger.addEventListener('click', function () {
+  if ((parseInt(scaleControlValue.value, 10) + ONE_STEP) >= 100) {
+    imgUpload.style.transform = 'scale(' + 1 + ')';
+    scaleControlValue.value = '100%';
+  } else {
+    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, 10) + ONE_STEP) / 100) + ')';
+    scaleControlValue.value = (parseInt(scaleControlValue.value, 10) + ONE_STEP) + '%';
+  }
+});
+
+controlSmaller.addEventListener('click', function () {
+  if ((parseInt(scaleControlValue.value, 10) - ONE_STEP) <= ONE_STEP) {
+    imgUpload.style.transform = 'scale(' + 0.25 + ')';
+    scaleControlValue.value = '25%';
+  } else {
+    imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, 10) - ONE_STEP) / 100) + ')';
+    scaleControlValue.value = (parseInt(scaleControlValue.value, 10) - ONE_STEP) + '%';
+  }
+});
+
+// всякие там другие эффекты
+
+var pinForm = document.querySelector('.img-upload__effect-level'); // вообще весь fieldset с ползунком
+var effectPin = pinForm.querySelector('.effect-level__pin'); // ползунок
+var levelValue = document.querySelector('.effect-level__value'); // значение ползунка
+var levelLine = pinForm.querySelector('.effect-level__line');// линия ползунка
+
+
+// pinForm.classList.add('hidden');// прячем ползунок
+
+// слайдер меняем значение value
+
+
+effectPin.addEventListener('mouseup', function () {
+
+  var firstPoint = effectPin.offsetLeft; // положение ползунка относительно начала линии
+  var computedStyle = getComputedStyle(levelLine); // Получаем стили шкалы
+  var scaleWidth = parseInt(computedStyle.width, 10);// Узнаем длину шкалы
+  levelValue.value = (Math.floor((firstPoint * 100) / scaleWidth)); // Меняем value
+});
+
+// добавляем эффекты и устанавливаем зависимость от положения ползунка
+
+for (var i = 0; i < effects.length; i++) {
+
+  effects[i].addEventListener('click', function (e) {
+    var newEffect = e.target.classList.item(1);
+
+    imgEffect.classList.remove(currentEffect);
+    currentEffect = newEffect;
+
+    imgEffect.classList.add(newEffect);
+
+    var formula = function (beggining, end) {
+      return beggining + (end / 100) * levelValue.value;
+    };
+
+    if (newEffect === 'effects__preview--chrome') {
+      imgEffect.style.filter = 'grayscale(' + formula(0, 1) + ')';
+    }
+
+    if (newEffect === 'effects__preview--sepia') {
+      imgEffect.style.filter = ('sepia(' + formula(0, 1) + ')');
+    }
+
+    if (newEffect === 'effects__preview--marvin') {
+      imgEffect.style.filter = ('invert(' + formula(0, 100) + '%' + ')');
+    }
+
+    if (newEffect === 'effects__preview--phobos') {
+      imgEffect.style.filter = ('blur(' + formula(0, 3) + 'px' + ')');
+    }
+
+    if (newEffect === 'effects__preview--heat') {
+      imgEffect.style.filter = ('brightness(' + formula(1, 3) + ')');
+    }
+
+    if (newEffect === 'effects__preview--none') {
+      pinForm.classList.add('hidden');
+    } else {
+      pinForm.classList.remove('hidden');
+    }
+  });
+}
+
+// валидация хэштэгов
+
+modalHash.addEventListener('input', function (evt) {
+  var invalidMessage = [];
+  var target = evt.target;
+
+
+  var inputText = modalHash.value.toLowerCase().trim();
+
+  var inputArray = inputText.split(/\s+/);
+
+  var isStartNoHashing = inputArray.some(function (item) {
+    return item[0] !== '#';
+  });
+
+  var isOnlyLaticeHashing = inputArray.some(function (item) {
+    return item === '#';
+  });
+
+  var isManySymbolsHashing = inputArray.some(function (item) {
+    return item.length > MAX_SYMBOLS;
+  });
+
+  var isNoSpaceHashing = inputArray.some(function (item) {
+    return item.indexOf('#', 1) >= 1;
+  });
+
+  var isSomeSpecialSymbols = inputArray.some(function (item) {
+    return item.slice(1).match(/^\w+$/);
+  });
+
+  if (!inputText) {
+    return;
+  }
+  if (inputArray.length === 0) {
+    return;
+  }
+
+  if (isStartNoHashing) {
+    invalidMessage.push('Хэштэг должен начинаться с "#"!');
+  }
+  if (isOnlyLaticeHashing) {
+    invalidMessage.push('Хэштэг не должен состоять только из "#"!');
+  }
+  if (inputArray.length > MAX_HASHTAGS) {
+    invalidMessage.push('Не более пяти хэштэгов!');
+  }
+  if (isManySymbolsHashing) {
+    invalidMessage.push('Максимальная длина одного хэш-тега 20 символов, включая решётку!');
+  }
+
+  if (isNoSpaceHashing) {
+    invalidMessage.push('Хэштэги должны разделяться пробелами!');
+  }
+
+  var isRepeatHashing = inputArray.some(function (item, j, arr) {
+    return arr.indexOf(item, j + 1) >= j + 1;
+  });
+  if (isRepeatHashing) {
+    invalidMessage.push('Один и тот же хэш-тег не может быть использован дважды!');
+  }
+
+  if (!isSomeSpecialSymbols) {
+    invalidMessage.push('Хэштэг не может содержать спецсимволы!');
+  }
+
+  target.setCustomValidity(invalidMessage.join('\n'));
+
+});
+
+
+/*
+// находим секцию,  показываем большую картинку
+
 var bigPicture = document.querySelector('.big-picture');
 bigPicture.classList.remove('hidden');
 
@@ -121,4 +353,5 @@ var createComment = function (fragment) {
 var fragmentComment = document.createDocumentFragment();
 
 createComment(fragmentComment);
-
+ var twoPoint = lineCoords.clientWidth + onePoint; // конец линии
+*/
