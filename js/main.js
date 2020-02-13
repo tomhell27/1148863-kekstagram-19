@@ -1,4 +1,5 @@
 'use strict';
+
 var MESSAGES = ['Всё отлично!', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?! '];
 
 var NAMES = ['БёрдМэн', 'ПРаск0вья', 'Артём27', 'Крошка Енот', 'Joker', 'NoName', 'Darzzz', 'Freddie', 'Алина'];
@@ -301,57 +302,5 @@ modalHash.addEventListener('input', function (evt) {
 
 });
 
+// validation
 
-/*
-// находим секцию,  показываем большую картинку
-
-var bigPicture = document.querySelector('.big-picture');
-bigPicture.classList.remove('hidden');
-
-// удаляем "Загрузить еще"
-var commentsLoader = bigPicture.querySelector('.comments-loader');
-commentsLoader.classList.add('hidden');
-
-// находим картинку
-var bigPictureImage = document.querySelector('.big-picture__img');
-bigPictureImage.querySelector('img').src = pictures[0].url;
-
-// лайки, описание, аватарка автора фотографии
-var bigPictureSocial = bigPicture.querySelector('.big-picture__social');
-bigPictureSocial.querySelector('.social__caption').textContent = pictures[0].description;
-bigPictureSocial.querySelector('.likes-count').textContent = pictures[0].likes;
-
-// комментарии, количество, аватарки
-var socialCommentCount = document.querySelector('.social__comment-count');
-socialCommentCount.querySelector('.comments-count').textContent = pictures[0].comments.length;
-socialCommentCount.classList.add('hidden');
-
-// находим все комментарии ul
-var newComments = document.querySelector('.social__comments');
-
-// находим все li
-var newComment = document.querySelector('.social__comment');
-
-
-var renderComment = function (picture) {
-  var commentElement = newComment.cloneNode(true);
-
-  commentElement.querySelector('.social__picture').src = picture.avatar;
-  commentElement.querySelector('.social__picture').alt = picture.name;
-  commentElement.querySelector('.social__text').textContent = picture.message;
-  return commentElement;
-};
-
-var createComment = function (fragment) {
-
-  for (var i = 0; i < pictures[0].comments.length; i++) {
-    fragment.appendChild(renderComment(pictures[0].comments[i]));
-  }
-  return newComments.appendChild(fragment);
-};
-
-var fragmentComment = document.createDocumentFragment();
-
-createComment(fragmentComment);
- var twoPoint = lineCoords.clientWidth + onePoint; // конец линии
-*/
