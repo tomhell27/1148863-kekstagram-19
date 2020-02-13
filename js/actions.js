@@ -1,4 +1,4 @@
-// opening-closing
+// actions
 
 'use strict';
 (function () {
@@ -14,7 +14,7 @@
   var openModal = function () {
     modalPicture.classList.remove('hidden');
     document.addEventListener('keydown', window.utils.onModalEscPress);
-    window.scale.scaleControlValue.value = '100%';
+    window.scale.ControlValue.value = '100%';
     imgUpload.style.transform = 'scale(1)';
     imgEffect.classList = 'none';
     imgEffect.style.filter = 'none';
@@ -48,7 +48,7 @@
     }
   });
 
-  window.openingClosing = {
+  window.actions = {
     modalComments: modalComments,
     closeModal: closeModal,
     modalHash: modalHash,

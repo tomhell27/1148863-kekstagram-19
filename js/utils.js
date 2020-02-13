@@ -11,11 +11,11 @@
   };
 
   var onModalEscPress = function (evt) {
-    if (window.openingClosing.modalHash === document.activeElement || window.openingClosing.modalComments === document.activeElement) {
+    if (window.actions.modalHash === document.activeElement || window.actions.modalComments === document.activeElement) {
       return;
     } else {
       if (evt.key === window.constants.ESC_KEY) {
-        window.openingClosing.closeModal();
+        window.actions.closeModal();
       }
     }
   };

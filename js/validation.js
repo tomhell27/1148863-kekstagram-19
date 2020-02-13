@@ -2,12 +2,12 @@
 
 // validation
 (function () {
-  window.openingClosing.modalHash.addEventListener('input', function (evt) {
+  window.actions.modalHash.addEventListener('input', function (evt) {
     var invalidMessage = [];
     var target = evt.target;
 
 
-    var inputText = window.openingClosing.modalHash.value.toLowerCase().trim();
+    var inputText = window.actions.modalHash.value.toLowerCase().trim();
 
     var inputArray = inputText.split(/\s+/);
 
