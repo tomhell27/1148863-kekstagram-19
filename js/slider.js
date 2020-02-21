@@ -18,14 +18,12 @@
       moveEvt.preventDefault();
 
       var shift = startCoords.x - moveEvt.clientX;
-      // console.log(shift);
       startCoords = {
         x: moveEvt.clientX,
       };
 
       var firstPoint = effectPin.offsetLeft; // положение ползунка относительно начала линии
 
-      // console.log(firstPoint);
       effectPin.style.left = (firstPoint - shift) + 'px';
 
       if ((firstPoint - shift) <= 0) {

@@ -14,7 +14,7 @@
       currentEffect = newEffect;
 
       window.actions.imgEffect.classList.add(newEffect);
-      window.scale.ControlValue.value = '100%';
+      window.scale.controlValue.value = '100%';
       window.actions.imgUpload.style.transform = 'scale(1)';
       window.slider.effectPin.style.left = '450px';
       window.slider.levelDeth.style.width = '100%';
@@ -48,7 +48,15 @@
 
     });
   }
+  var form = document.querySelector('.img-upload__form');
+  form.addEventListener('submit', function (e) {
+    window.upload(new FormData(form), function () {
+      window.actions.modalPicture.classList.add('hidden');
+    });
+    e.preventDefault();
+
+  });
   window.effects = {
-    effectLabel: effects
+    label: effects
   };
 })();

@@ -30,7 +30,7 @@
     }
   });
   window.scale = {
-    ControlValue: scaleControlValue
+    controlValue: scaleControlValue
   };
 })();
 
