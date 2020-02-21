@@ -1,6 +1,4 @@
 'use strict';
-
-// creation
 (function () {
   var body = document.querySelector('body');
   body.classList.add('modal-open');
@@ -20,6 +18,7 @@
 
   var successHandler = function (photos) {
     window.bigPicture.createBigPicture(photos[0]);
+
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(renderPicture(photos[i]));

@@ -3,9 +3,9 @@
 // slider
 (function () {
 
-  var pinForm = document.querySelector('.img-upload__effect-level'); // вообще весь fieldset с ползунком
-  var effectPin = pinForm.querySelector('.effect-level__pin'); // ползунок
-  var levelValue = document.querySelector('.effect-level__value'); // значение ползунка
+  var pinForm = document.querySelector('.img-upload__effect-level');
+  var effectPin = pinForm.querySelector('.effect-level__pin');
+  var levelValue = document.querySelector('.effect-level__value');
   var levelDeth = document.querySelector('.effect-level__depth');
 
   effectPin.addEventListener('mousedown', function (evt) {
@@ -22,7 +22,7 @@
         x: moveEvt.clientX,
       };
 
-      var firstPoint = effectPin.offsetLeft; // положение ползунка относительно начала линии
+      var firstPoint = effectPin.offsetLeft;
 
       effectPin.style.left = (firstPoint - shift) + 'px';
 
@@ -35,8 +35,8 @@
 
       var oneStep = window.constants.LEVEL_WIDTH / window.constants.WIDTH_PERSENT;
 
-      levelValue.value = Math.floor(firstPoint / oneStep); // значение ползунка = к-ло шагов
-      levelDeth.style.width = (Math.floor(firstPoint / oneStep) + '%'); // Заполняем шкалу желтеньким
+      levelValue.value = Math.floor(firstPoint / oneStep);
+      levelDeth.style.width = (Math.floor(firstPoint / oneStep) + '%');
 
       var formula = function (beggining, end) {
         return beggining + (end / window.constants.WIDTH_PERSENT) * levelValue.value;

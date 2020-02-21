@@ -1,4 +1,4 @@
-// constants
+
 'use strict';
 
 (function () {
@@ -14,6 +14,8 @@
   var WIDTH_PERSENT = 100;
   var URL = 'https://js.dump.academy/kekstagram/data';
   var URL_GO = 'https://js.dump.academy/kekstagram';
+  var STATUS = 200;
+  var TIMEOUT = 1000;
 
   window.constants = {
     AVATAR_NUMBER: AVATAR_NUMBER,
@@ -27,6 +29,8 @@
     WIDTH_PERSENT: WIDTH_PERSENT,
     URL: URL,
     URL_GO: URL_GO,
-    MAX_COMMENTS: MAX_COMMENTS
+    MAX_COMMENTS: MAX_COMMENTS,
+    STATUS: STATUS,
+    TIMEOUT: TIMEOUT
   };
 })();

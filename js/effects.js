@@ -1,6 +1,5 @@
 'use strict';
 
-//  effects
 (function () {
   var currentEffect = 'none';
   var effects = document.querySelectorAll('.effects__label');
