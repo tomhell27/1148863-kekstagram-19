@@ -73,7 +73,7 @@
     });
   };
   form.addEventListener('submit', function (e) {
-    window.backend.load(new FormData(form), onSuccess, onError, 'POST', window.constants.URL_GO);
+    window.backend.upload(new FormData(form), onSuccess, onError, 'POST', window.constants.URL_GO);
     e.preventDefault();
   });
 
