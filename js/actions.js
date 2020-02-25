@@ -1,6 +1,6 @@
-// actions
 
 'use strict';
+
 (function () {
   var modalOpen = document.querySelector('#upload-file');
   var modalClose = document.querySelector('#upload-cancel');
@@ -14,7 +14,7 @@
   var openModal = function () {
     modalPicture.classList.remove('hidden');
     document.addEventListener('keydown', window.utils.onModalEscPress);
-    window.scale.ControlValue.value = '100%';
+    window.scale.controlValue.value = '100%';
     imgUpload.style.transform = 'scale(1)';
     imgEffect.classList = 'none';
     imgEffect.style.filter = 'none';
@@ -47,13 +47,13 @@
       closeModal();
     }
   });
-
   window.actions = {
     modalComments: modalComments,
     closeModal: closeModal,
     modalHash: modalHash,
     imgUpload: imgUpload,
-    imgEffect: imgEffect
+    imgEffect: imgEffect,
+    modalPicture: modalPicture
   };
 })();
 

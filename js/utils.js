@@ -1,6 +1,5 @@
 'use strict';
 
-// utils
 (function () {
   var body = document.querySelector('body');
   body.classList.add('modal-open');

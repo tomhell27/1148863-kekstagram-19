@@ -1,6 +1,5 @@
 'use strict';
 
-// scale
 (function () {
   var controlSmaller = document.querySelector('.scale__control--smaller');
   var controlBigger = document.querySelector('.scale__control--bigger');
@@ -30,7 +29,7 @@
     }
   });
   window.scale = {
-    ControlValue: scaleControlValue
+    controlValue: scaleControlValue
   };
 })();
 

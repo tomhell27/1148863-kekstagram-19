@@ -1,6 +1,5 @@
 'use strict';
 
-// validation
 (function () {
   window.actions.modalHash.addEventListener('input', function (evt) {
     var invalidMessage = [];
@@ -69,4 +68,5 @@
     target.setCustomValidity(invalidMessage.join('\n'));
 
   });
+
 })();
