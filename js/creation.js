@@ -10,6 +10,9 @@
   var renderPicture = function (picture) {
     var pictureElement = similarPictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = picture.url;
+    pictureElement.querySelector('.picture__img').addEventListener('click', function () {
+      window.bigPicture.createBigPicture(picture);
+    });
     pictureElement.querySelector('.picture__likes').textContent = picture.likes;
     pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
 
@@ -17,8 +20,6 @@
   };
 
   var successHandler = function (photos) {
-    window.bigPicture.createBigPicture(photos[0]);
-
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(renderPicture(photos[i]));
@@ -36,9 +37,13 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
+
+    node.addEventListener('click', function () {
+      node.remove();
+    });
   };
 
-  window.backend.load(successHandler, errorHandler);
+  window.backend.load('', successHandler, errorHandler, 'GET', window.constants.URL);
 
   window.creation = {
     similarPictureTemplate: similarPictureTemplate

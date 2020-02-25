@@ -3,6 +3,13 @@
 (function () {
   var currentEffect = 'none';
   var effects = document.querySelectorAll('.effects__label');
+  var main = document.querySelector('main');
+  var success = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+  var error = document.querySelector('#error')
+    .content
+    .querySelector('.error');
 
   for (var i = 0; i < effects.length; i++) {
 
@@ -48,13 +55,29 @@
     });
   }
   var form = document.querySelector('.img-upload__form');
-  form.addEventListener('submit', function (e) {
-    window.backend.upload(new FormData(form), function () {
-      window.actions.modalPicture.classList.add('hidden');
-    });
-    e.preventDefault();
 
+  var onSuccess = function () {
+    window.actions.modalPicture.classList.add('hidden');
+    var successElement = success.cloneNode(true);
+    main.appendChild(successElement);
+    successElement.querySelector('.success__button').addEventListener('click', function () {
+      successElement.remove();
+    });
+  };
+  var onError = function () {
+    window.actions.modalPicture.classList.add('hidden');
+    var errorElement = error.cloneNode(true);
+    main.appendChild(errorElement);
+    errorElement.querySelector('.error__button').addEventListener('click', function () {
+      errorElement.remove();
+    });
+  };
+  form.addEventListener('submit', function (e) {
+    window.backend.load(new FormData(form), onSuccess, onError, 'POST', window.constants.URL_GO);
+    e.preventDefault();
   });
+
+
   window.effects = {
     label: effects,
     form: form
