@@ -6,9 +6,19 @@
     var pictureImg = pictureElement.querySelector('.picture__img');
 
     pictureImg.src = picture.url;
-    pictureImg.addEventListener('click', function () {
+    var openBigPicture = function () {
       window.bigPicture.createBigPicture(picture);
+      document.addEventListener('keydown', window.bigPicture.onPictureEscapePress);
+    };
+    pictureImg.addEventListener('click', function () {
+      openBigPicture();
     });
+    pictureImg.parentElement.addEventListener('keydown', function (evt) {
+      if (evt.key === window.constants.ENTER_KEY) {
+        openBigPicture();
+      }
+    });
+
     pictureElement.querySelector('.picture__likes').textContent = picture.likes;
     pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
     imageFilters.classList.remove('img-filters--inactive');

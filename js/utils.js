@@ -18,7 +18,6 @@
       }
     }
   };
-
   window.utils = {
     onModalEscPress: onModalEscPress,
     randomNUMBER: randomNUMBER

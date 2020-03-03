@@ -10,6 +10,7 @@
   var MAX_HASHTAGS = 5;
   var MAX_COMMENTS = 5;
   var MAX_SYMBOLS = 20;
+  var MAX_COMMENTS_SYMBOLS = 140;
   var LEVEL_WIDTH = 450;
   var WIDTH_PERSENT = 100;
   var URL = 'https://js.dump.academy/kekstagram/data';
@@ -31,6 +32,7 @@
     URL_GO: URL_GO,
     MAX_COMMENTS: MAX_COMMENTS,
     STATUS: STATUS,
-    TIMEOUT: TIMEOUT
+    TIMEOUT: TIMEOUT,
+    MAX_COMMENTS_SYMBOLS: MAX_COMMENTS_SYMBOLS
   };
 })();
