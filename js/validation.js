@@ -69,4 +69,12 @@
 
   });
 
+  window.actions.modalComments.addEventListener('input', function (evt) {
+    var target = evt.target;
+    if (target.value.length > window.constants.MAX_COMMENTS_SYMBOLS) {
+      target.setCustomValidity('Комментарий не должен быть длиннее ' + window.constants.MAX_COMMENTS_SYMBOLS + '-х символов');
+    } else {
+      target.setCustomValidity('');
+    }
+  });
 })();

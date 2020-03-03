@@ -20,6 +20,7 @@
     imgEffect.style.filter = 'none';
     window.slider.pinForm.classList.add('hidden');
     modalHash.value = '';
+    modalComments.value = '';
   };
 
   var closeModal = function () {
