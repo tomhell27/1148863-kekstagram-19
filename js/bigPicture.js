@@ -36,11 +36,14 @@
     bigPictureImage.querySelector('img').src = picture.url;
     bigPictureSocial.querySelector('.social__caption').textContent = picture.description;
     bigPictureSocial.querySelector('.likes-count').textContent = picture.likes;
-    socialCommentCount.querySelector('.comments-count').textContent = picture.comments.length;
     var newComment = bigPictureSocial.querySelector('.social__comment');
     var newComments = bigPictureSocial.querySelector('.social__comments');
-
+    var spliceNumber = 0;
     var picComments = picture.comments.slice();
+
+    newComments.querySelectorAll('.social__comment').forEach(function (e) {
+      newComments.removeChild(e);
+    });
     var renderComments = function (comment) {
       var commentElement = newComment.cloneNode(true);
       commentElement.querySelector('.social__picture').src = comment.avatar;
@@ -50,24 +53,24 @@
     };
 
     var createComment = function (data) {
-      newComments.querySelectorAll('.social__comment').forEach(function (e) {
-        newComments.removeChild(e);
-      });
+      var pageComment = data.length + spliceNumber;
+      socialCommentCount.textContent = pageComment + ' из ' + picture.comments.length + ' комментариев ';
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < data.length && i < commentsNumber; i++) {
+      for (var i = 0; i < data.length; i++) {
         fragment.appendChild(renderComments(data[i]));
       }
-      if (commentsNumber > data.length) {
+      if (spliceNumber > data.length) {
         commentsLoader.classList.add('visually-hidden');
       } else {
         commentsLoader.classList.remove('visually-hidden');
       }
       return newComments.appendChild(fragment);
     };
-    createComment(picture.comments);
+    createComment(picComments.splice(0, commentsNumber));
 
     commentsLoader.addEventListener('click', window.debounce.balancing(function () {
-      createComment(picComments.splice(0, 5));
+      spliceNumber += 5;
+      createComment(picComments.splice(0, (spliceNumber)));
     }));
   };
 
