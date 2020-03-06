@@ -17,6 +17,7 @@
   var URL_GO = 'https://js.dump.academy/kekstagram';
   var STATUS = 200;
   var TIMEOUT = 1000;
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   window.constants = {
     AVATAR_NUMBER: AVATAR_NUMBER,
@@ -33,6 +34,7 @@
     MAX_COMMENTS: MAX_COMMENTS,
     STATUS: STATUS,
     TIMEOUT: TIMEOUT,
-    MAX_COMMENTS_SYMBOLS: MAX_COMMENTS_SYMBOLS
+    MAX_COMMENTS_SYMBOLS: MAX_COMMENTS_SYMBOLS,
+    FILE_TYPES: FILE_TYPES
   };
 })();

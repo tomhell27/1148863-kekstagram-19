@@ -9,8 +9,6 @@
   var modalComments = document.querySelector('.text__description');
   var imgUpload = document.querySelector('.img-upload__preview');
   var imgEffect = imgUpload.querySelector('img');
-
-
   var openModal = function () {
     modalPicture.classList.remove('hidden');
     document.addEventListener('keydown', window.utils.onModalEscPress);
@@ -27,11 +25,11 @@
     modalPicture.classList.add('hidden');
     document.removeEventListener('keydown', window.utils.onModalEscPress);
   };
-
+  /*
   modalOpen.addEventListener('change', function () {
     openModal();
   });
-
+*/
   modalOpen.addEventListener('keydown', function (evt) {
     if (evt.key === window.constants.ENTER_KEY) {
       openModal();
@@ -54,7 +52,9 @@
     modalHash: modalHash,
     imgUpload: imgUpload,
     imgEffect: imgEffect,
-    modalPicture: modalPicture
+    modalPicture: modalPicture,
+    modalOpen: modalOpen,
+    openModal: openModal
   };
 })();
 
