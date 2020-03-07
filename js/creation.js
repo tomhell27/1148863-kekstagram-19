@@ -22,16 +22,16 @@
   };
 
   var successHandler = function (photos) {
-    var photosSort = photos.slice();
-    var photosSortRandom = photos.slice(0, 10);
-    updatePhotos(photos);
+    var photosSortRandom = photos.slice(0, window.constants.RANDOM_PHOTOS_NUMBER);
 
+    updatePhotos(photos);
+    filterDefault.focus();
     filterDefault.addEventListener('click', window.debounce.balancing(function () {
       updatePhotos(photos);
     }));
 
     filterDiscussed.addEventListener('click', window.debounce.balancing(function () {
-      var photosDiscussed = photosSort.sort(function (first, second) {
+      var photosDiscussed = photos.slice(0).sort(function (first, second) {
         if (first.comments.length < second.comments.length) {
           return 1;
         } else if (first.comments.length < second.comments.length) {
