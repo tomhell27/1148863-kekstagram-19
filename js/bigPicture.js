@@ -9,14 +9,14 @@
   var socialCommentCount = document.querySelector('.social__comment-count');
   var closeButton = bigPicture.querySelector('.big-picture__cancel');
 
-  var onPictureEscapePress = function (e) {
-    if (e.key === window.constants.ESC_KEY) {
+  var onPictureEscapePress = function (evt) {
+    if (evt.key === window.constants.ESC_KEY) {
       closeBigPicture();
     }
   };
   var closeBigPicture = function () {
     bigPicture.classList.add('hidden');
-    document.removeEventListener('keydown', onPictureEscapePress());
+    document.removeEventListener('keydown', onPictureEscapePress);
   };
 
   closeButton.addEventListener('click', function () {
@@ -31,15 +31,16 @@
 
   var createBigPicture = function (picture) {
     bigPicture.classList.remove('hidden');
-    bigPicture.tabindex = 0;
+    bigPicture.tabindex = window.constants.ZERO;
     bigPicture.focus();
     bigPictureImage.querySelector('img').src = picture.url;
     bigPictureSocial.querySelector('.social__caption').textContent = picture.description;
     bigPictureSocial.querySelector('.likes-count').textContent = picture.likes;
+
     var newComment = bigPictureSocial.querySelector('.social__comment');
     var newComments = bigPictureSocial.querySelector('.social__comments');
-    var spliceNumber = 0;
-    var picComments = picture.comments.slice();
+    var spliceNumber = window.constants.ZERO;
+    var picComments = picture.comments.slice(0);
 
     newComments.querySelectorAll('.social__comment').forEach(function (e) {
       newComments.removeChild(e);
@@ -66,11 +67,11 @@
       }
       return newComments.appendChild(fragment);
     };
-    createComment(picComments.splice(0, commentsNumber));
+    createComment(picComments.splice(window.constants.ZERO, commentsNumber));
 
     commentsLoader.addEventListener('click', window.debounce.balancing(function () {
-      spliceNumber += 5;
-      createComment(picComments.splice(0, (spliceNumber)));
+      spliceNumber += window.constants.MESSAGE_NUMBER;
+      createComment(picComments.splice(window.constants.ZERO, (spliceNumber)));
     }));
   };
 

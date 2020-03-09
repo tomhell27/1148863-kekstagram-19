@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
   var previewImg = document.querySelectorAll('.effects__preview');
   var createPreview = function (img) {
