@@ -14,7 +14,7 @@
   var LEVEL_WIDTH = 450;
   var WIDTH_PERSENT = 100;
   var STATUS = 200;
-  var TIMEOUT = 1000;
+  var TIMEOUT = 10000;
   var RANDOM_PHOTOS_NUMBER = 10;
   var ZERO = 0;
   var STEP = 10;

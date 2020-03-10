@@ -3,8 +3,7 @@
   var body = document.querySelector('body');
   body.classList.add('modal-open');
   var similarListElement = document.querySelector('.pictures');
-  var similarPictureTemplate = document.querySelector('#picture')
-    .content;
+  var similarPictureTemplate = document.querySelector('#picture').content;
   var filterDefault = window.render.imageFilters.querySelector('#filter-default');
   var filterRandom = window.render.imageFilters.querySelector('#filter-random');
   var filterDiscussed = window.render.imageFilters.querySelector('#filter-discussed');
@@ -26,11 +25,11 @@
 
     updatePhotos(photos);
     filterDefault.focus();
-    filterDefault.addEventListener('click', window.debounce.balancing(function () {
+    filterDefault.addEventListener('click', window.debounce(function () {
       updatePhotos(photos);
     }));
 
-    filterDiscussed.addEventListener('click', window.debounce.balancing(function () {
+    filterDiscussed.addEventListener('click', window.debounce(function () {
       var photosDiscussed = photos.slice(0).sort(function (first, second) {
         if (first.comments.length < second.comments.length) {
           return 1;
@@ -43,7 +42,7 @@
       updatePhotos(photosDiscussed);
     }));
 
-    filterRandom.addEventListener('click', window.debounce.balancing(function () {
+    filterRandom.addEventListener('click', window.debounce(function () {
       var photosRandom = photosSortRandom.sort(function () {
         return Math.random() - 0.5;
       });

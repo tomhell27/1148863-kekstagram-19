@@ -7,8 +7,7 @@
 
     pictureImg.src = picture.url;
     var openBigPicture = function () {
-      window.bigPicture.createBigPicture(picture);
-      document.addEventListener('keydown', window.bigPicture.onPictureEscapePress);
+      window.bigPicture.create(picture);
     };
     pictureImg.addEventListener('click', function () {
       openBigPicture();

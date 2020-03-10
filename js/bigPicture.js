@@ -3,7 +3,7 @@
 (function () {
   var bigPicture = document.querySelector('.big-picture');
   var commentsLoader = bigPicture.querySelector('.comments-loader');
-  var bigPictureImage = document.querySelector('.big-picture__img');
+  var bigPictureImage = bigPicture.querySelector('.big-picture__img');
   var bigPictureSocial = bigPicture.querySelector('.big-picture__social');
   var commentsNumber = window.constants.MAX_COMMENTS;
   var socialCommentCount = document.querySelector('.social__comment-count');
@@ -30,6 +30,8 @@
   });
 
   var createBigPicture = function (picture) {
+    document.addEventListener('keydown', onPictureEscapePress);
+    var picComments = picture.comments.slice();
     bigPicture.classList.remove('hidden');
     bigPicture.tabindex = window.constants.ZERO;
     bigPicture.focus();
@@ -40,8 +42,6 @@
     var newComment = bigPictureSocial.querySelector('.social__comment');
     var newComments = bigPictureSocial.querySelector('.social__comments');
     var spliceNumber = window.constants.ZERO;
-    var picComments = picture.comments.slice(0);
-
     newComments.querySelectorAll('.social__comment').forEach(function (e) {
       newComments.removeChild(e);
     });
@@ -60,7 +60,7 @@
       for (var i = 0; i < data.length; i++) {
         fragment.appendChild(renderComments(data[i]));
       }
-      if (spliceNumber > data.length) {
+      if (pageComment >= picture.comments.length) {
         commentsLoader.classList.add('visually-hidden');
       } else {
         commentsLoader.classList.remove('visually-hidden');
@@ -69,14 +69,14 @@
     };
     createComment(picComments.splice(window.constants.ZERO, commentsNumber));
 
-    commentsLoader.addEventListener('click', window.debounce.balancing(function () {
+    commentsLoader.addEventListener('click', window.debounce(function () {
       spliceNumber += window.constants.MESSAGE_NUMBER;
-      createComment(picComments.splice(window.constants.ZERO, (spliceNumber)));
+      createComment(picComments.splice(window.constants.ZERO, commentsNumber));
     }));
   };
 
   window.bigPicture = {
-    createBigPicture: createBigPicture,
-    onPictureEscapePress: onPictureEscapePress
+    create: createBigPicture,
+    EscapePress: onPictureEscapePress
   };
 })();
