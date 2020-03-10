@@ -4,14 +4,14 @@
   body.classList.add('modal-open');
   var similarListElement = document.querySelector('.pictures');
   var similarPictureTemplate = document.querySelector('#picture').content;
-  var filterDefault = window.render.imageFilters.querySelector('#filter-default');
-  var filterRandom = window.render.imageFilters.querySelector('#filter-random');
-  var filterDiscussed = window.render.imageFilters.querySelector('#filter-discussed');
+  var filterDefault = window.bigPicture.imageFilters.querySelector('#filter-default');
+  var filterRandom = window.bigPicture.imageFilters.querySelector('#filter-random');
+  var filterDiscussed = window.bigPicture.imageFilters.querySelector('#filter-discussed');
 
   var updatePhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
-      fragment.appendChild(window.render.picture(arr[i]));
+      fragment.appendChild(window.bigPicture.render(arr[i]));
     }
     var filterPhotos = document.querySelectorAll('.picture');
     filterPhotos.forEach(function (e) {
@@ -72,3 +72,4 @@
   };
 
 })();
+

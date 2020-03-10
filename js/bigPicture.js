@@ -5,15 +5,41 @@
   var commentsLoader = bigPicture.querySelector('.comments-loader');
   var bigPictureImage = bigPicture.querySelector('.big-picture__img');
   var bigPictureSocial = bigPicture.querySelector('.big-picture__social');
-  var commentsNumber = window.constants.MAX_COMMENTS;
   var socialCommentCount = document.querySelector('.social__comment-count');
   var closeButton = bigPicture.querySelector('.big-picture__cancel');
+  var commentsNumber = window.constants.MAX_COMMENTS;
+  var imageFilters = document.querySelector('.img-filters');
+
+  var renderPicture = function (picture) {
+    var pictureElement = window.creation.similarPictureTemplate.cloneNode(true);
+    var pictureImg = pictureElement.querySelector('.picture__img');
+
+    pictureImg.src = picture.url;
+    var openBigPicture = function () {
+      createBigPicture(picture);
+      document.addEventListener('keydown', window.bigPicture.EscapePress);
+    };
+    pictureImg.addEventListener('click', function () {
+      openBigPicture();
+    });
+    pictureImg.parentElement.addEventListener('keydown', function (evt) {
+      if (evt.key === window.constants.ENTER_KEY) {
+        openBigPicture();
+      }
+    });
+
+    pictureElement.querySelector('.picture__likes').textContent = picture.likes;
+    pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    imageFilters.classList.remove('img-filters--inactive');
+    return pictureElement;
+  };
 
   var onPictureEscapePress = function (evt) {
     if (evt.key === window.constants.ESC_KEY) {
       closeBigPicture();
     }
   };
+
   var closeBigPicture = function () {
     bigPicture.classList.add('hidden');
     document.removeEventListener('keydown', onPictureEscapePress);
@@ -30,9 +56,8 @@
   });
 
   var createBigPicture = function (picture) {
-    document.addEventListener('keydown', onPictureEscapePress);
-    var picComments = picture.comments.slice();
     bigPicture.classList.remove('hidden');
+    var picComments = picture.comments.slice();
     bigPicture.tabindex = window.constants.ZERO;
     bigPicture.focus();
     bigPictureImage.querySelector('img').src = picture.url;
@@ -77,6 +102,8 @@
 
   window.bigPicture = {
     create: createBigPicture,
-    EscapePress: onPictureEscapePress
+    EscapePress: onPictureEscapePress,
+    render: renderPicture,
+    imageFilters: imageFilters
   };
 })();
