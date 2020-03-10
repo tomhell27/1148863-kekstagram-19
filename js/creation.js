@@ -7,6 +7,15 @@
   var filterDefault = window.bigPicture.imageFilters.querySelector('#filter-default');
   var filterRandom = window.bigPicture.imageFilters.querySelector('#filter-random');
   var filterDiscussed = window.bigPicture.imageFilters.querySelector('#filter-discussed');
+  var filtersButtons = window.bigPicture.imageFilters.querySelectorAll('.img-filters__button');
+
+  filtersButtons.forEach(function (e) {
+    e.addEventListener('click', function () {
+      var filtersButtonActive = window.bigPicture.imageFilters.querySelector('.img-filters__button--active');
+      filtersButtonActive.classList.remove('img-filters__button--active');
+      e.classList.add('img-filters__button--active');
+    });
+  });
 
   var updatePhotos = function (arr) {
     var fragment = document.createDocumentFragment();
