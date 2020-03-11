@@ -2,12 +2,13 @@
 'use strict';
 
 (function () {
-  var modalOpen = document.querySelector('#upload-file');
-  var modalClose = document.querySelector('#upload-cancel');
-  var modalPicture = document.querySelector('.img-upload__overlay');
-  var modalHash = document.querySelector('.text__hashtags');
-  var modalComments = document.querySelector('.text__description');
-  var imgUpload = document.querySelector('.img-upload__preview');
+  var newImage = document.querySelector('.img-upload');
+  var modalOpen = newImage.querySelector('#upload-file');
+  var modalClose = newImage.querySelector('#upload-cancel');
+  var modalPicture = newImage.querySelector('.img-upload__overlay');
+  var modalHash = newImage.querySelector('.text__hashtags');
+  var modalComments = newImage.querySelector('.text__description');
+  var imgUpload = newImage.querySelector('.img-upload__preview');
   var imgEffect = imgUpload.querySelector('img');
 
   var openModal = function () {
@@ -52,4 +53,3 @@
     openModal: openModal
   };
 })();
-

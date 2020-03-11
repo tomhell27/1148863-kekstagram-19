@@ -10,22 +10,22 @@
 
 
   controlBigger.addEventListener('click', function () {
-    if ((parseInt(scaleControlValue.value, window.constants.STEP) + window.constants.ONE_STEP) >= window.constants.WIDTH_PERSENT) {
+    if ((parseInt(scaleControlValue.value, 10) + window.constants.ONE_STEP) >= window.constants.WIDTH_PERSENT) {
       window.actions.imgUpload.style.transform = 'scale(1)';
       scaleControlValue.value = '100%';
     } else {
-      window.actions.imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, window.constants.STEP) + window.constants.ONE_STEP) / window.constants.WIDTH_PERSENT) + ')';
-      scaleControlValue.value = (parseInt(scaleControlValue.value, window.constants.STEP) + window.constants.ONE_STEP) + '%';
+      window.actions.imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, 10) + window.constants.ONE_STEP) / window.constants.WIDTH_PERSENT) + ')';
+      scaleControlValue.value = (parseInt(scaleControlValue.value, 10) + window.constants.ONE_STEP) + '%';
     }
   });
 
   controlSmaller.addEventListener('click', function () {
-    if ((parseInt(scaleControlValue.value, window.constants.STEP) - window.constants.ONE_STEP) <= window.constants.ONE_STEP) {
+    if ((parseInt(scaleControlValue.value, 10) - window.constants.ONE_STEP) <= window.constants.ONE_STEP) {
       window.actions.imgUpload.style.transform = 'scale(0.25)';
       scaleControlValue.value = '25%';
     } else {
-      window.actions.imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, window.constants.STEP) - window.constants.ONE_STEP) / window.constants.WIDTH_PERSENT) + ')';
-      scaleControlValue.value = (parseInt(scaleControlValue.value, window.constants.STEP) - window.constants.ONE_STEP) + '%';
+      window.actions.imgUpload.style.transform = 'scale(' + ((parseInt(scaleControlValue.value, 10) - window.constants.ONE_STEP) / window.constants.WIDTH_PERSENT) + ')';
+      scaleControlValue.value = (parseInt(scaleControlValue.value, 10) - window.constants.ONE_STEP) + '%';
     }
   });
   window.scale = {

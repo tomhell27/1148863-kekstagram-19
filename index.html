@@ -129,7 +129,7 @@
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
                   <input class="text__hashtags" name="hashtags" placeholder="#хэш-тег" minlength="2" maxlength="20">
-                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..." minlength="2" maxlength="140"></textarea>
                 </fieldset>
 
                 <!-- Кнопка для отправки данных на сервер -->
@@ -254,9 +254,8 @@
   <script src="js/utils.js"></script>
   <script src="js/backend.js"></script>
   <script src="js/debounce.js"></script>
-  <script src="js/render.js"></script>
-  <script src="js/creation.js"></script>
   <script src="js/bigPicture.js"></script>
+  <script src="js/creation.js"></script>
   <script src="js/actions.js"></script>
   <script src="js/myPicture.js"></script>
   <script src="js/scale.js"></script>

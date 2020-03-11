@@ -13,7 +13,5 @@
       }, window.constants.DEBOUNCE_INTERVAL);
     };
   };
-  window.debounce = {
-    balancing: debounce
-  };
+  window.debounce = debounce;
 })();

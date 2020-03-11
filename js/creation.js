@@ -3,16 +3,24 @@
   var body = document.querySelector('body');
   body.classList.add('modal-open');
   var similarListElement = document.querySelector('.pictures');
-  var similarPictureTemplate = document.querySelector('#picture')
-    .content;
-  var filterDefault = window.render.imageFilters.querySelector('#filter-default');
-  var filterRandom = window.render.imageFilters.querySelector('#filter-random');
-  var filterDiscussed = window.render.imageFilters.querySelector('#filter-discussed');
+  var similarPictureTemplate = document.querySelector('#picture').content;
+  var filterDefault = window.bigPicture.imageFilters.querySelector('#filter-default');
+  var filterRandom = window.bigPicture.imageFilters.querySelector('#filter-random');
+  var filterDiscussed = window.bigPicture.imageFilters.querySelector('#filter-discussed');
+  var filtersButtons = window.bigPicture.imageFilters.querySelectorAll('.img-filters__button');
+
+  filtersButtons.forEach(function (e) {
+    e.addEventListener('click', function () {
+      var filtersButtonActive = window.bigPicture.imageFilters.querySelector('.img-filters__button--active');
+      filtersButtonActive.classList.remove('img-filters__button--active');
+      e.classList.add('img-filters__button--active');
+    });
+  });
 
   var updatePhotos = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
-      fragment.appendChild(window.render.picture(arr[i]));
+      fragment.appendChild(window.bigPicture.render(arr[i]));
     }
     var filterPhotos = document.querySelectorAll('.picture');
     filterPhotos.forEach(function (e) {
@@ -26,11 +34,11 @@
 
     updatePhotos(photos);
     filterDefault.focus();
-    filterDefault.addEventListener('click', window.debounce.balancing(function () {
+    filterDefault.addEventListener('click', window.debounce(function () {
       updatePhotos(photos);
     }));
 
-    filterDiscussed.addEventListener('click', window.debounce.balancing(function () {
+    filterDiscussed.addEventListener('click', window.debounce(function () {
       var photosDiscussed = photos.slice(0).sort(function (first, second) {
         if (first.comments.length < second.comments.length) {
           return 1;
@@ -43,7 +51,7 @@
       updatePhotos(photosDiscussed);
     }));
 
-    filterRandom.addEventListener('click', window.debounce.balancing(function () {
+    filterRandom.addEventListener('click', window.debounce(function () {
       var photosRandom = photosSortRandom.sort(function () {
         return Math.random() - 0.5;
       });
@@ -73,3 +81,4 @@
   };
 
 })();
+
