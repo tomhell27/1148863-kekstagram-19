@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var previewImg = document.querySelectorAll('.effects__preview');
   var createPreview = function (img) {
     previewImg.forEach(function (e) {
@@ -10,7 +11,7 @@
   window.actions.modalOpen.addEventListener('change', function () {
     var file = window.actions.modalOpen.files[0];
     var fileName = file.name.toLowerCase();
-    var matches = window.constants.FILE_TYPES.some(function (it) {
+    var matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
     if (matches) {
@@ -32,7 +33,7 @@
       node.textContent = 'Неверный формат документа! Используйте формат gif, jpg, png или jpeg';
       document.body.insertAdjacentElement('afterbegin', node);
 
-      node.addEventListener('click', function () {
+      document.addEventListener('click', function () {
         node.remove();
       });
     }

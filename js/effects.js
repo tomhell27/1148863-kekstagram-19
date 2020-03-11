@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var ESC_KEY = 'Escape';
+  var URL_GO = 'https://js.dump.academy/kekstagram';
   var currentEffect = 'none';
   var effects = document.querySelectorAll('.effects__label');
   var main = document.querySelector('main');
@@ -10,6 +12,7 @@
   var error = document.querySelector('#error')
     .content
     .querySelector('.error');
+  var body = document.querySelector('body');
 
   for (var i = 0; i < effects.length; i++) {
 
@@ -57,12 +60,13 @@
   var errorButton = errorElement.querySelector('.error__button');
 
   var onSuccesslEscPress = function (evt) {
-    if (evt.key === window.constants.ESC_KEY) {
+    if (evt.key === ESC_KEY) {
       closeSuccess();
     }
   };
 
   var closeSuccess = function () {
+    body.classList.remove('modal-open');
     successElement.remove();
     document.removeEventListener('keydown', onSuccesslEscPress);
   };
@@ -76,12 +80,13 @@
   });
 
   var onErrorlEscPress = function (evt) {
-    if (evt.key === window.constants.ESC_KEY) {
+    if (evt.key === ESC_KEY) {
       closeError();
     }
   };
 
   var closeError = function () {
+    body.classList.remove('modal-open');
     errorElement.remove();
     document.removeEventListener('keydown', onErrorlEscPress);
   };
@@ -96,20 +101,35 @@
 
 
   var onSuccess = function () {
+    window.actions.imgForm.reset();
     window.actions.modalPicture.classList.add('hidden');
     main.appendChild(successElement);
     document.addEventListener('keydown', onSuccesslEscPress);
   };
 
 
-  var onError = function () {
+  var onError = function (errorMessage) {
     window.actions.modalPicture.classList.add('hidden');
     main.appendChild(errorElement);
     document.addEventListener('keydown', onErrorlEscPress);
+
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: tomato;';
+    node.style.position = 'absolute';
+    node.style.left = '0';
+    node.style.right = '0';
+    node.style.fontSize = '25px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+
+    document.addEventListener('click', function () {
+      node.remove();
+    });
   };
 
   form.addEventListener('submit', function (e) {
-    window.backend.upload(new FormData(form), onSuccess, onError, 'POST', window.constants.URL_GO);
+    window.backend.upload(new FormData(form), onSuccess, onError, 'POST', URL_GO);
     e.preventDefault();
   });
 
