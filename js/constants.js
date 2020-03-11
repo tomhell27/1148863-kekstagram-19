@@ -19,7 +19,7 @@
     RANDOM_PHOTOS_NUMBER: 10,
     ZERO: 0,
     STEP: 10,
-    DEBOUNCE_INTERVAL: 500,
+
     URL: 'https://js.dump.academy/kekstagram/data',
     URL_GO: 'https://js.dump.academy/kekstagram',
     FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png']

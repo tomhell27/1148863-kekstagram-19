@@ -1,14 +1,16 @@
 'use strict';
 
 (function () {
-  var xhr = new XMLHttpRequest();
-  xhr.responseType = 'json';
-  xhr.timeout = window.constants.TIMEOUT;
+  var STATUS = 200;
+  var TIMEOUT = 10000;
 
   var goBackend = function (data, onSuccess, onError, method, url) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.timeout = TIMEOUT;
     xhr.addEventListener('load', function () {
       onSuccess(xhr.response);
-      if (xhr.status !== window.constants.STATUS) {
+      if (xhr.status !== STATUS) {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });

@@ -1,9 +1,8 @@
 'use strict';
 (function () {
-  var body = document.querySelector('body');
-  body.classList.add('modal-open');
+  var URL = 'https://js.dump.academy/kekstagram/data';
+  var RANDOM_PHOTOS_NUMBER = 10;
   var similarListElement = document.querySelector('.pictures');
-  var similarPictureTemplate = document.querySelector('#picture').content;
   var filterDefault = window.bigPicture.imageFilters.querySelector('#filter-default');
   var filterRandom = window.bigPicture.imageFilters.querySelector('#filter-random');
   var filterDiscussed = window.bigPicture.imageFilters.querySelector('#filter-discussed');
@@ -30,8 +29,7 @@
   };
 
   var successHandler = function (photos) {
-    var photosSortRandom = photos.slice(0, window.constants.RANDOM_PHOTOS_NUMBER);
-
+    var photosSortRandom = photos.slice(0, RANDOM_PHOTOS_NUMBER);
     updatePhotos(photos);
     filterDefault.focus();
     filterDefault.addEventListener('click', window.debounce(function () {
@@ -70,15 +68,10 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
 
-    node.addEventListener('click', function () {
+    document.addEventListener('click', function () {
       node.remove();
     });
   };
 
-  window.backend.load('', successHandler, errorHandler, 'GET', window.constants.URL);
-  window.creation = {
-    similarPictureTemplate: similarPictureTemplate
-  };
-
+  window.backend.load('', successHandler, errorHandler, 'GET', URL);
 })();
-
