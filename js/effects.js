@@ -82,6 +82,7 @@
   var onErrorlEscPress = function (evt) {
     if (evt.key === ESC_KEY) {
       closeError();
+      document.querySelector('.error-message').remove();
     }
   };
 
@@ -107,18 +108,14 @@
     document.addEventListener('keydown', onSuccesslEscPress);
   };
 
-
   var onError = function (errorMessage) {
-    window.actions.modalPicture.classList.add('hidden');
-    main.appendChild(errorElement);
-    document.addEventListener('keydown', onErrorlEscPress);
-
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: tomato;';
     node.style.position = 'absolute';
     node.style.left = '0';
     node.style.right = '0';
     node.style.fontSize = '25px';
+    node.classList.add('error-message');
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
@@ -126,6 +123,11 @@
     document.addEventListener('click', function () {
       node.remove();
     });
+
+    window.actions.imgForm.reset();
+    window.actions.modalPicture.classList.add('hidden');
+    main.appendChild(errorElement);
+    document.addEventListener('keydown', onErrorlEscPress);
   };
 
   form.addEventListener('submit', function (e) {
