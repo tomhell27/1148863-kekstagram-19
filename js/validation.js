@@ -64,10 +64,6 @@
     }
     target.setCustomValidity(invalidMessages.join('\n'));
 
-    var getBorder = function (provision) {
-      return provision ? (window.actions.modalHash.style = 'border: 3px solid tomato') : (window.actions.modalHash.style = 'border: none');
-    };
-
-    getBorder(invalidMessages.length > 0);
+    window.actions.modalHash.style = invalidMessages.length > 0 ? 'border: 3px solid tomato' : 'border: none';
   });
 })();
