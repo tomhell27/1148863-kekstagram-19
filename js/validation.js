@@ -64,10 +64,10 @@
     }
     target.setCustomValidity(invalidMessages.join('\n'));
 
-    if (invalidMessages.length > 0) {
-      window.actions.modalHash.style = 'border: 3px solid tomato';
-    } else {
-      window.actions.modalHash.style = 'border: none';
-    }
+    var getBorder = function (provision) {
+      return provision ? (window.actions.modalHash.style = 'border: 3px solid tomato') : (window.actions.modalHash.style = 'border: none');
+    };
+
+    getBorder(invalidMessages.length > 0);
   });
 })();
